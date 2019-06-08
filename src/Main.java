@@ -7,22 +7,21 @@ public class Main {
         System.out.println("Introduceti parola:");
         String password = input.nextLine();
         boolean valid = true;
-        if(password.length()<6){
+        if (password.length() < 6) {
             System.out.println("Lungimea trebuie sa fie de minim 6 caractere");
             valid = false;
         }
-        if(!Pattern.matches(".*[a-z].*",password)){
-            System.out.println("Minim o litera mica!");
-            valid = false;
-        }
-        if(!Pattern.matches(".*[A-Z].*",password)){
-            System.out.println("Minim o litera mare!");
-            valid = false;
-        }
-        if(!Pattern.matches(".*\\d.*",password)){
-            System.out.println("Minim un digit!");
-            valid = false;
-        }
-        System.out.println(valid? "Parola corecta" : "Parola incorecta");
+        boolean hasLowerCase = isValid(".*[a-z].*", password, "minim o litera mica");
+        boolean hasUpperCase = isValid(".*[A-Z].*", password, "minim o litera mare");
+        boolean hasDigit = isValid(".*\\d.*", password, "minim un digit");
+
+        valid = valid && hasDigit && hasLowerCase && hasUpperCase;
+        System.out.println(valid ? "Parola corecta" : "Parola incorecta");
+    }
+    private static boolean isValid(String regex,String password, String message){
+        if(Pattern.matches(regex,password))
+            return true;
+        System.out.println(message);
+        return false;
     }
 }
